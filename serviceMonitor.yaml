@@ -1,0 +1,13 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: example
+  labels:
+    k8s-app: prometheus
+spec:
+  selector:
+    matchLabels:
+      tier: control-plane
+  endpoints:
+    - port: web
+      interval: 30s
