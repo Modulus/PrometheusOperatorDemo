@@ -9,9 +9,7 @@ spec:
   serviceAccountName: prometheus-k8s
   securityContext: {}
   serviceMonitorSelector: {}
-  podMonitorSelector: 
-    matchLabels:
-      tier: control-plane
+  podMonitorSelector: {}
   ruleSelector: {}
   alerting:
     alertmanagers:
