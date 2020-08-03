@@ -1,0 +1,53 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: version
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: version
+  template:
+    metadata:
+      labels:
+        app: version
+    spec:
+      containers:
+      - name: version
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        image: coderpews/version-app:4.0
+        ports:
+        - containerPort: 5000
+          name: web
+        - containerPort: 8000
+          name: metrics
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 1
+          periodSeconds: 1
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5000  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: version
+spec:
+  selector:
+    app: version
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 5000

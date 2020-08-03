@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: app-pod-monitor
+  labels:
+    team: backend
+spec:
+  namespaceSelector:
+    matchNames:
+      - demo
+  jobLabel: pod-monitor
+  selector:
+    matchLabels:
+      container: version
+  podMetricsEndpoints:
+    # - interval: 15s
+    #   path: /
+    #   port: "8000" 
+  - port: "metrics"
+    interval: 5s
+    path: /
